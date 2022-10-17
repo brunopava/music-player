@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c7b1bc6b229db43a8f98bd0e9669da, type: 3}
+  m_Name: Theme A
+  m_EditorClassIdentifier: 
+  colors:
+  - instanceId:
+      Value: 38b3f6d7-94f6-40dc-b37e-6ed61854b17e
+    name: Panel
+    tag: 
+    regex: Panel
+    uiMask: -1
+    descendants:
+    - target:
+        Value: 22d72255-844f-4233-aa51-de831170041a
+    - target:
+        Value: 93f29bad-a891-484a-ade6-c4aa00148229
+    - target:
+        Value: 02a02e5f-2fbc-496a-b009-22eaa8288f5d
+    colorList:
+    - name: Color
+      color: {r: 0.40000004, g: 0.40000004, b: 0.40000004, a: 1}
+    - name: Normal
+      color: {r: 1, g: 1, b: 1, a: 1}
+    - name: Highlighted
+      color: {r: 1, g: 1, b: 1, a: 1}
+    - name: Pressed
+      color: {r: 1, g: 1, b: 1, a: 1}
+    - name: Disabled
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors:
+    - {fileID: 0}
+  - instanceId:
+      Value: 22d72255-844f-4233-aa51-de831170041a
+    name: Main Color
+    tag: 
+    regex: Logo|Border
+    uiMask: 1
+    descendants: []
+    colorList:
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 02a02e5f-2fbc-496a-b009-22eaa8288f5d
+    name: Play Now Button
+    tag: 
+    regex: Play
+    uiMask: 20
+    descendants: []
+    colorList:
+    - name: Normal
+      color: {r: 1, g: 1, b: 1, a: 1}
+    - name: Highlighted
+      color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+    - name: Pressed
+      color: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    - name: Disabled
+      color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 93f29bad-a891-484a-ade6-c4aa00148229
+    name: Default Button
+    tag: 
+    regex: 
+    uiMask: 20
+    descendants: []
+    colorList:
+    - name: Normal
+      color: {r: 0.86764705, g: 0.86764705, b: 0.86764705, a: 1}
+    - name: Highlighted
+      color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+    - name: Pressed
+      color: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    - name: Disabled
+      color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 0.8666667}
+    effectors: []
+  - instanceId:
+      Value: 0a1e08e8-a01a-4a44-a9d8-026536a56524
+    name: New Element
+    tag: 
+    regex: Logo
+    uiMask: -1
+    descendants: []
+    colorList:
+    - name: Normal
+      color: {r: 1, g: 1, b: 1, a: 1}
+    - name: Highlighted
+      color: {r: 1, g: 1, b: 1, a: 1}
+    - name: Pressed
+      color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - name: Disabled
+      color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    effectors:
+    - {fileID: 0}

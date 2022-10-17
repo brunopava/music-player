@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c7b1bc6b229db43a8f98bd0e9669da, type: 3}
+  m_Name: Tutorial Example 2
+  m_EditorClassIdentifier: 
+  colors:
+  - instanceId:
+      Value: 8821f58e-622b-4fdd-89ca-fabf6add08e2
+    name: Panel
+    tag: 
+    regex: 
+    uiMask: 1
+    descendants:
+    - target:
+        Value: 6157cbfa-0112-485c-a126-1c4ab9d360f8
+    - target:
+        Value: 22d72255-844f-4233-aa51-de831170041a
+    - target:
+        Value: 58ac07c2-679f-41cf-8ef7-566726401458
+    - target:
+        Value: a197572e-4a0c-49f3-8bc7-1afb0c2ccf49
+    - target:
+        Value: a09ad1cb-65e2-4599-92b0-6eb6582ccb30
+    colorList:
+    - name: Color
+      color: {r: 0.14509805, g: 0.32156864, b: 0.4, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 22d72255-844f-4233-aa51-de831170041a
+    name: Logo
+    tag: 
+    regex: 
+    uiMask: 1
+    descendants: []
+    colorList:
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 58ac07c2-679f-41cf-8ef7-566726401458
+    name: Icon
+    tag: 
+    regex: Icon
+    uiMask: 16
+    descendants: []
+    colorList:
+    - name: Normal
+      color: {r: 0.36274505, g: 0.8039214, b: 1, a: 1}
+    - name: Highlighted
+      color: {r: 0.722, g: 0.91472393, b: 1, a: 1}
+    - name: Pressed
+      color: {r: 0.27852547, g: 0.6206275, b: 0.772, a: 1}
+    - name: Disabled
+      color: {r: 0.7725491, g: 0.7725491, b: 0.7725491, a: 1}
+    effectors: []
+  - instanceId:
+      Value: a09ad1cb-65e2-4599-92b0-6eb6582ccb30
+    name: Play Now
+    tag: 
+    regex: Play Now
+    uiMask: 20
+    descendants: []
+    colorList:
+    - name: Normal
+      color: {r: 1, g: 0.6, b: 0, a: 1}
+    - name: Highlighted
+      color: {r: 1, g: 0.7612, b: 0.403, a: 1}
+    - name: Pressed
+      color: {r: 0.697, g: 0.41820005, b: 0, a: 1}
+    - name: Disabled
+      color: {r: 0.728, g: 0.67441916, b: 0.59404796, a: 1}
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 6157cbfa-0112-485c-a126-1c4ab9d360f8
+    name: Default Button
+    tag: 
+    regex: 
+    uiMask: 20
+    descendants:
+    - target:
+        Value: dd406d66-f879-41e6-a89a-9e9a3a2674fc
+    colorList:
+    - name: Normal
+      color: {r: 0.32156864, g: 0.29411766, b: 0.37647063, a: 1}
+    - name: Highlighted
+      color: {r: 0.5048124, g: 0.46171874, b: 0.591, a: 1}
+    - name: Pressed
+      color: {r: 0.133, g: 0.07204166, b: 0.266, a: 1}
+    - name: Disabled
+      color: {r: 0.37647063, g: 0.37647063, b: 0.37647063, a: 1}
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors: []
+  - instanceId:
+      Value: a197572e-4a0c-49f3-8bc7-1afb0c2ccf49
+    name: Footer
+    tag: 
+    regex: Footer
+    uiMask: 4
+    descendants: []
+    colorList:
+    - name: Color
+      color: {r: 0.36078432, g: 0.8000001, b: 1, a: 1}
+    effectors: []
+  - instanceId:
+      Value: dd406d66-f879-41e6-a89a-9e9a3a2674fc
+    name: Text
+    tag: 
+    regex: 
+    uiMask: 4
+    descendants: []
+    colorList:
+    - name: Color
+      color: {r: 1, g: 1, b: 1, a: 1}
+    effectors: []

@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c7b1bc6b229db43a8f98bd0e9669da, type: 3}
+  m_Name: Theme C
+  m_EditorClassIdentifier: 
+  colors:
+  - instanceId:
+      Value: 38b3f6d7-94f6-40dc-b37e-6ed61854b17e
+    name: Base Color
+    tag: 
+    regex: Panel
+    uiMask: 1
+    descendants:
+    - target:
+        Value: 22d72255-844f-4233-aa51-de831170041a
+    - target:
+        Value: 93f29bad-a891-484a-ade6-c4aa00148229
+    - target:
+        Value: 02a02e5f-2fbc-496a-b009-22eaa8288f5d
+    colorList:
+    - name: Color
+      color: {r: 0.88235295, g: 0.88235295, b: 0.88235295, a: 1}
+    effectors:
+    - {fileID: 11400000, guid: f1c9fcd200e9ca34d90074d341285a52, type: 2}
+  - instanceId:
+      Value: 22d72255-844f-4233-aa51-de831170041a
+    name: Main Color
+    tag: 
+    regex: Logo|Border
+    uiMask: 1
+    descendants: []
+    colorList:
+    - name: Color
+      color: {r: 0.14509805, g: 0.32156864, b: 0.4, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 02a02e5f-2fbc-496a-b009-22eaa8288f5d
+    name: Play Now Button
+    tag: 
+    regex: Play
+    uiMask: 20
+    descendants:
+    - target:
+        Value: 9ec350ca-009e-4b1c-a4cb-0fa4eb40135f
+    colorList:
+    - name: Normal
+      color: {r: 0.80784315, g: 0.078431375, b: 0.3529412, a: 1}
+    - name: Highlighted
+      color: {r: 0.793349, g: 0.88453543, b: 0.9098039, a: 1}
+    - name: Pressed
+      color: {r: 0.23563921, g: 0.76352304, b: 0.9098039, a: 1}
+    - name: Disabled
+      color: {r: 0.89705884, g: 0.89705884, b: 0.89705884, a: 1}
+    - name: Color
+      color: {r: 0.80784315, g: 0.078431375, b: 0.3529412, a: 1}
+    effectors:
+    - {fileID: 11400000, guid: 4b7d1117a2565894f956a73eda198604, type: 2}
+  - instanceId:
+      Value: 93f29bad-a891-484a-ade6-c4aa00148229
+    name: Default Button
+    tag: 
+    regex: 
+    uiMask: 20
+    descendants:
+    - target:
+        Value: 9ec350ca-009e-4b1c-a4cb-0fa4eb40135f
+    colorList:
+    - name: Normal
+      color: {r: 0.27205884, g: 0.27205884, b: 0.27205884, a: 1}
+    - name: Highlighted
+      color: {r: 0.6116863, g: 0.78560406, b: 0.8627451, a: 1}
+    - name: Pressed
+      color: {r: 0, g: 0.46551934, b: 0.672, a: 1}
+    - name: Disabled
+      color: {r: 0.8455882, g: 0.8455882, b: 0.8455882, a: 1}
+    - name: Color
+      color: {r: 0.27058825, g: 0.27058825, b: 0.27058825, a: 1}
+    effectors: []
+  - instanceId:
+      Value: 9ec350ca-009e-4b1c-a4cb-0fa4eb40135f
+    name: Text
+    tag: 
+    regex: 
+    uiMask: 4
+    descendants: []
+    colorList: []
+    effectors:
+    - {fileID: 0}
