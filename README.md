@@ -6,3 +6,6 @@ Once the API is running copy the URL on settings menu, the app now can search an
 
 Playing songs only works on Android using ANA:
 https://assetstore.unity.com/packages/tools/audio/android-native-audio-35295
+
+
+This app is a work in progress.
