@@ -13,6 +13,12 @@ public delegate void UpdateProgress (float progress);
 
 public class WebRequestsManager : Singleton<WebRequestsManager>
 {
+    private string URL;
+    private void Awake()
+    {
+        URL = PlayerPrefs.GetString("url");
+    }
+
     public void DownloadSong(JSONObject json, SuccessEvent successEvent, ErrorEvent errorEvent, UpdateProgress updateProgress)
     {
         Debug.Log(json);
@@ -23,7 +29,7 @@ public class WebRequestsManager : Singleton<WebRequestsManager>
     {
         string[] splitArray =  query.Split(char.Parse(" "));
         string finalQuery = String.Join("%20", splitArray);
-        string url = "http://127.0.0.1:8000/api/songs/search?query={0}";
+        string url = URL+"/api/songs/search?query={0}";
         string apiCall = string.Format(url, finalQuery);
 
         StartCoroutine(GetRequest(apiCall, successEvent, errorEvent, updateProgress));
@@ -31,7 +37,7 @@ public class WebRequestsManager : Singleton<WebRequestsManager>
 
     private IEnumerator PostRequest(JSONObject track, SuccessEvent successEvent, ErrorEvent errorEvent, UpdateProgress updateProgress)
     {
-        string url = "http://127.0.0.1:8000/api/download/objects";
+        string url = URL+"/api/download/objects";
         WWWForm form = new WWWForm();
         byte[] encodedPayload = new System.Text.UTF8Encoding().GetBytes(track.ToString());
         // form.AddField("song", track.ToString());

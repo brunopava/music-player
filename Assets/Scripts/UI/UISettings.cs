@@ -11,6 +11,14 @@ public class UISettings : UIScreen
 
     public void Refresh()
     {
-    	
+        string url = PlayerPrefs.GetString("url");
+    	inputfield.text = url;
+
+        saveButton.onClick.RemoveAllListeners();
+        saveButton.onClick.AddListener(
+            ()=>{
+                PlayerPrefs.SetString("url", inputfield.text);
+            }
+        );
     }
 }
