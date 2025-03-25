@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "com.kirbyrawr.dotnetstandard-bip32": "1.0.0",
-    "com.kirbyrawr.stellar-dotnet-sdk": "6.0.31",
     "com.unity.test-framework": "1.1.31",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.ugui": "1.0.0",
@@ -37,13 +35,5 @@
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
   },
-  "scopedRegistries": [
-    {
-      "name": "Kirbyrawr",
-      "url": "https://registry.npmjs.org",
-      "scopes": [
-        "com.kirbyrawr"
-      ]
-    }
-  ]
+  "scopedRegistries": []
 }

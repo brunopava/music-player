@@ -24,8 +24,7 @@ public class UIManager : Singleton<UIManager>
 	public Button searchButton;
 	public Button settingsButton;
 	public Button currentSongButton;
-
-	public ObjectPoolerSimple trackCell;
+	
 	public ObjectPoolerSimple playlistCell;
 
 	public Text screenTitle;
@@ -90,7 +89,7 @@ public class UIManager : Singleton<UIManager>
 	
 	public void GoToPlaylist()
 	{
-		// Debug.Log("playlistsButton");
+		Debug.Log("playlistsButton");
 		DisableAllScreens();
 		playlist.gameObject.SetActive(true);
 		screenTitle.text = MusicPlayerManager.Instance.currentPlaylist.playlistName;
@@ -110,7 +109,7 @@ public class UIManager : Singleton<UIManager>
 		// Debug.Log("currentSongButton");
 		DisableAllScreens();
 		player.gameObject.SetActive(true);
-		screenTitle.text = "Now Playing";
+		// screenTitle.text = "Now Playing";
 		player.SetTrack(track);
 	}
 
@@ -118,7 +117,7 @@ public class UIManager : Singleton<UIManager>
 	{
 		DisableAllScreens();
 		player.gameObject.SetActive(true);
-		screenTitle.text = "Now Playing";
+		// screenTitle.text = "Now Playing";
 		UIManager.Instance.player.RefreshTrackInfo();
 	}
 
@@ -142,6 +141,11 @@ public class UIManager : Singleton<UIManager>
 		DisableAllScreens();
 		vault.gameObject.SetActive(true);
 		screenTitle.text = "Vault";
+	}
+
+	public void SelectSongs()
+	{
+
 	}
 
 	public void AddBackButtonEvent(BackButtonEvent backEvent)

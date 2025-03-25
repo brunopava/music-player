@@ -52,6 +52,10 @@ public class UIPlaylistCell : MonoBehaviour
                     MusicPlayerManager.Instance.SetPlayList(pl);
                     UIManager.Instance.GoToPlaylist();
                 });
+            }else{
+                GetComponent<Button>().onClick.AddListener(()=>{
+                    UIManager.Instance.SelectSongs();
+                });
             }
         } 
     }

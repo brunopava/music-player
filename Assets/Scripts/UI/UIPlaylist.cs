@@ -9,6 +9,8 @@ public class UIPlaylist : UIScreen
 
     public GameObject trackCellPrefab;
 
+    private List<GameObject> _cells = new List<GameObject>();
+
     private void OnEnable()
     {
         PurgeCells();
@@ -32,24 +34,25 @@ public class UIPlaylist : UIScreen
 
     private void CreateCell(Track track, int index)
     {
-        GameObject trackCell = UIManager.Instance.trackCell.GetPooledObject();
+        GameObject trackCell = GameObject.Instantiate(trackCellPrefab, Vector3.zero, Quaternion.identity, contentPanel) as GameObject;
+
         trackCell.SetActive(true);
-        trackCell.transform.SetParent(contentPanel);
 
         trackCell.GetComponent<UITrackCell>().SetTrack(track);
+
+        _cells.Add(trackCell); 
     }
 
     private void PurgeCells()
     {
-        UIManager.Instance.trackCell.ResetPool();
-        // if(_cells != null)
-        // {
-        //     foreach(GameObject current in _cells)
-        //     {
-        //         GameObject.Destroy(current);
-        //     }
+        if(_cells != null)
+        {
+            foreach(GameObject current in _cells)
+            {
+                GameObject.Destroy(current);
+            }
 
-        // }
-        // _cells = new List<GameObject>(); 
+        }
+        _cells = new List<GameObject>(); 
     }
 }

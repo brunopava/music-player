@@ -103,6 +103,7 @@ public class UITrackCell : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(()=>{
             if(_readyToPlay)
             {
+                Debug.Log(_track.trackName);
                 MusicPlayerManager.Instance.PlaySong(_track);
             }else{
                 //TODO: DOWNLOAD AND PLAY
@@ -111,10 +112,13 @@ public class UITrackCell : MonoBehaviour
         });
 
         downloadButton.onClick.AddListener(()=>{
+            isDownloading = true;
             ShowProgress();
             WebRequestsManager.Instance.DownloadSong(_track.trackInfo, OnDownloadComplete, OnDownloadError, OnProgressUpdate);
         });
     }
+
+    private bool isDownloading = false;
 
     public void SetupOptions()
     {
@@ -159,6 +163,7 @@ public class UITrackCell : MonoBehaviour
 
     private void OnDownloadComplete(JSONObject json)
     {
+        isDownloading = false;
         MusicPlayerManager.Instance.AddToLibrary(json);
         DOTween.Kill(downloadProgress);
         downloadProgress.DOFade(0f, 0.5f);
@@ -168,12 +173,17 @@ public class UITrackCell : MonoBehaviour
 
     private void OnDownloadError(JSONObject json)
     {
+        isDownloading = false;
         Debug.Log(json);
         DOTween.Kill(downloadProgress);
         downloadProgress.gameObject.SetActive(false);
         iconError.gameObject.SetActive(true);
         progressText.gameObject.SetActive(false);
         iconError.DOFade(1f, 0f);
+
+        downloadProgress.DOFillAmount(1, 0);
+        downloadProgress.DOColor(Color.white, 0);
+
         iconError.DOFade(0f, 0.5f).SetDelay(5f).OnStepComplete(()=>{
             iconError.gameObject.SetActive(false);
             downloadButton.gameObject.SetActive(true);
@@ -184,6 +194,37 @@ public class UITrackCell : MonoBehaviour
 
     private void OnProgressUpdate(float progress)
     {
-        progressText.text = progress.ToString("n2") + "%";
+        if(!isMinimized)
+        {
+            progressText.text = progress.ToString("n2") + "%";
+        }
+    }
+
+    public bool isMinimized;
+    private void OnApplicationPause(bool minimized)
+    {
+        isMinimized = minimized;
+        Debug.Log(isMinimized);
+        if(isMinimized)
+        {
+            DOTween.KillAll();
+        }else{
+            if(isDownloading)
+            {
+                downloadProgress.DOFillAmount(1, 0);
+                downloadProgress.DOColor(Color.white, 0);
+                downloadProgress.fillClockwise = true;
+
+                // Animate the circle outline's color and fillAmount
+                downloadProgress.DOColor(PUtils.RandomColor(), 1.5f).SetEase(Ease.Linear).Pause();
+                    downloadProgress.DOFillAmount(0, 1.5f)
+                    .SetEase(Ease.Linear)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .OnStepComplete(()=> {
+                        downloadProgress.fillClockwise = !downloadProgress.fillClockwise;
+                        downloadProgress.DOColor(PUtils.RandomColor(), 1.5f).SetEase(Ease.Linear);
+                }); 
+            }
+        }
     }
 }

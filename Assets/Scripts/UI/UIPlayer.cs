@@ -26,6 +26,8 @@ public class UIPlayer : UIScreen
 
     public Slider progressionSlider;
 
+    private bool isSeeking = false;
+
     private void Awake()
     {
         playButton.onClick.AddListener(()=>{
@@ -86,12 +88,15 @@ public class UIPlayer : UIScreen
 
     private void Update()
     {
+        if(MusicPlayerManager.Instance.isMinimized)
+            return;
+            
         if(gameObject.activeSelf)
         {
-            if(ActivityManager.Instance.IsPlaying())
+            if (ANAMusic.isPlaying(MusicPlayerManager.Instance.MusicID))
             {
-                int current = ActivityManager.Instance.GetCurrentTime();
-                int duration = ActivityManager.Instance.GetDuration();
+                int current = ANAMusic.getCurrentPosition(MusicPlayerManager.Instance.MusicID);
+                int duration = ANAMusic.getDuration(MusicPlayerManager.Instance.MusicID);
 
                 currentPlayingTime.text = PUtils.FormatTime(current);
                 totalDuration.text = PUtils.FormatTime(duration);
@@ -99,7 +104,8 @@ public class UIPlayer : UIScreen
                 pauseIcon.SetActive(true);
                 playIcon.SetActive(false);
 
-                progressionSlider.value = PUtils.GetProgress(current, duration);            
+                if(!isSeeking)
+                    progressionSlider.value = PUtils.GetProgress(current, duration);            
             }else{
                 pauseIcon.SetActive(false);
                 playIcon.SetActive(true);
@@ -109,23 +115,17 @@ public class UIPlayer : UIScreen
 
     public void PlayPause()
     {
-        if(ActivityManager.Instance.IsPlaying())
-        {
-            ActivityManager.Instance.Pause();
-            
-        }else{
-            ActivityManager.Instance.Play();
-        }
+        MusicPlayerManager.Instance.PlayPause();
     }
 
     public void OnPointerUpDelegate(PointerEventData data)
     {
-        MusicPlayerManager.Instance.player.OnSelectProgress(false);
+        // MusicPlayerManager.Instance.player.OnSelectProgress(false);
     }
 
     public void OnPointerDownDelegate(PointerEventData data)
     {
-        MusicPlayerManager.Instance.player.OnSelectProgress(true);
+        // MusicPlayerManager.Instance.player.OnSelectProgress(true);
     }
 
     public void SetImageByURL(string imageUrl)
@@ -139,11 +139,6 @@ public class UIPlayer : UIScreen
 
         pauseIcon.SetActive(false);
         playIcon.SetActive(true);
-
-        if(_currentTrack.songPath != "")
-        {
-            ActivityManager.Instance.PrepareSong(_currentTrack.songPath);
-        }
     }
 
     public void RefreshTrackInfo(Track track=null)
@@ -164,11 +159,29 @@ public class UIPlayer : UIScreen
 
         SetImageByURL(_currentTrack.urlImage);
 
-        int current = ActivityManager.Instance.GetCurrentTime();
-        int duration = ActivityManager.Instance.GetDuration();
+        int current = ANAMusic.getCurrentPosition(MusicPlayerManager.Instance.MusicID);
+        int duration = ANAMusic.getDuration(MusicPlayerManager.Instance.MusicID);
 
         currentPlayingTime.text = current.ToString();
         totalDuration.text = current.ToString();
+    }
+
+
+    public void OnProgressionSliderDown()
+    {
+        isSeeking = true;
+    }
+
+    public void OnProgressionSliderUp()
+    {
+        int current = ANAMusic.getCurrentPosition(MusicPlayerManager.Instance.MusicID);
+        int duration = ANAMusic.getDuration(MusicPlayerManager.Instance.MusicID);
+
+        float pointer = duration * progressionSlider.value;
+
+        ANAMusic.seekTo(MusicPlayerManager.Instance.MusicID, (int)pointer);
+
+        isSeeking = false;
     }
 }
 

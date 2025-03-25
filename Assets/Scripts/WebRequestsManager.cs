@@ -23,7 +23,7 @@ public class WebRequestsManager : Singleton<WebRequestsManager>
     {
         string[] splitArray =  query.Split(char.Parse(" "));
         string finalQuery = String.Join("%20", splitArray);
-        string url = "https://v3nom0us.herokuapp.com/api/songs/search?query={0}";
+        string url = "http://127.0.0.1:8000/api/songs/search?query={0}";
         string apiCall = string.Format(url, finalQuery);
 
         StartCoroutine(GetRequest(apiCall, successEvent, errorEvent, updateProgress));
@@ -31,9 +31,11 @@ public class WebRequestsManager : Singleton<WebRequestsManager>
 
     private IEnumerator PostRequest(JSONObject track, SuccessEvent successEvent, ErrorEvent errorEvent, UpdateProgress updateProgress)
     {
-        string url = "https://v3nom0us.herokuapp.com/api/download/objects?return_file=true";
+        string url = "http://127.0.0.1:8000/api/download/objects";
         WWWForm form = new WWWForm();
         byte[] encodedPayload = new System.Text.UTF8Encoding().GetBytes(track.ToString());
+        // form.AddField("song", track.ToString());
+        // form.AddBinaryData("song", encodedPayload);
         Debug.Log(url);
         Debug.Log(track.ToString());
 
@@ -48,9 +50,6 @@ public class WebRequestsManager : Singleton<WebRequestsManager>
             UnityWebRequestAsyncOperation operation = webRequest.SendWebRequest();
 
             yield return DownloadProgress(operation, updateProgress);
-
-            string[] pages = url.Split('/');
-            int page = pages.Length - 1;
 
             JSONObject json = null;
 
@@ -76,6 +75,7 @@ public class WebRequestsManager : Singleton<WebRequestsManager>
                     track.AddField("song_path", MusicPlayerManager.Instance.fullLibraryPath+'/'+PUtils.RemoveQuotes(track["name"].ToString()) + ".mp3");
                     successEvent(track);
                     System.IO.File.WriteAllBytes(@PUtils.RemoveQuotes(track["song_path"].ToString()), webRequest.downloadHandler.data);
+                    Debug.Log(MusicPlayerManager.Instance.fullLibraryPath);
                     break;
             }
         }

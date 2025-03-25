@@ -23,7 +23,8 @@ public class UISearch : UIScreen
         iconLoader.gameObject.SetActive(false);
     	search.onClick.AddListener(()=>{
             PurgeCells();
-    		WebRequestsManager.Instance.SearchSong(searchbar.text,OnSearchSuccess,OnSearchError, OnProgressUpdate);
+    		WebRequestsManager.Instance.SearchSong(searchbar.text,OnSearchSuccess, OnSearchError, OnProgressUpdate);
+            isSearching = true;
             // Animate the circle outline's color and fillAmount
             iconLoader.gameObject.SetActive(true);
             iconLoader.DOColor(PUtils.RandomColor(), 1.5f).SetEase(Ease.Linear).Pause();
@@ -36,6 +37,8 @@ public class UISearch : UIScreen
             });
     	});
     }
+
+    private bool isSearching = false;
 
     private void OnProgressUpdate(float progress)
     {
@@ -51,6 +54,7 @@ public class UISearch : UIScreen
 
     private void OnSearchSuccess(JSONObject json)
     {
+        isSearching = false;
         ResetIconLoader();
     	// Debug.Log(json);
         _cells = new List<GameObject>();
@@ -81,8 +85,7 @@ public class UISearch : UIScreen
 
     private void CreateTrackCell(Track track)
     {
-        GameObject trackCell = GameObject.Instantiate(trackCellPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-        trackCell.transform.SetParent(resultContent);
+        GameObject trackCell = GameObject.Instantiate(trackCellPrefab, Vector3.zero, Quaternion.identity, resultContent) as GameObject;
 
         trackCell.GetComponent<UITrackCell>().SetTrack(track);
 
@@ -91,6 +94,7 @@ public class UISearch : UIScreen
 
     private void OnSearchError(JSONObject json)
     {
+        isSearching = false;
         Debug.Log(json);
         ResetIconLoader();
         iconError.gameObject.SetActive(true);
@@ -110,5 +114,33 @@ public class UISearch : UIScreen
         }
 
         _cells = new List<GameObject>();
+    }
+
+    public bool isMinimized;
+    private void OnApplicationPause(bool minimized)
+    {
+        isMinimized = minimized;
+        Debug.Log(isMinimized);
+        if(isMinimized)
+        {
+            DOTween.KillAll();
+        }else{
+            if(isSearching)
+            {
+                iconLoader.DOFillAmount(1, 0);
+                iconLoader.DOColor(Color.white, 0);
+                iconLoader.fillClockwise = true;
+
+                iconLoader.gameObject.SetActive(true);
+                iconLoader.DOColor(PUtils.RandomColor(), 1.5f).SetEase(Ease.Linear).Pause();
+                iconLoader.DOFillAmount(0, 1.5f)
+                .SetEase(Ease.Linear)
+                .SetLoops(-1, LoopType.Yoyo)
+                .OnStepComplete(()=> {
+                    iconLoader.fillClockwise = !iconLoader.fillClockwise;
+                    iconLoader.DOColor(PUtils.RandomColor(), 1.5f).SetEase(Ease.Linear);
+                });
+            }
+        }
     }
 }

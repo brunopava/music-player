@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using stellar_dotnet_sdk;
 
 public class UIVault : UIScreen
 {
@@ -22,12 +21,12 @@ public class UIVault : UIScreen
     private void Start()
     {
         createWalletButton.onClick.AddListener(()=>{
-            KeyPair keypair = StellarManager.Instance.GenerateAccountKeyPair();
-            wallet.text = keypair.AccountId;
-            secret.text = keypair.SecretSeed;
+            // KeyPair keypair = StellarManager.Instance.GenerateAccountKeyPair();
+            // wallet.text = keypair.AccountId;
+            // secret.text = keypair.SecretSeed;
 
-            Debug.Log(keypair.AccountId);
-            Debug.Log(keypair.SecretSeed);
+            // Debug.Log(keypair.AccountId);
+            // Debug.Log(keypair.SecretSeed);
         });
 
 

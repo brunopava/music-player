@@ -12,8 +12,6 @@ public class MusicPlayerManager : Singleton<MusicPlayerManager>
 
     public AudioSource audioSource;
 
-    public bl_AudioPlayer player;
-
     public List<Track> allTracks = new List<Track>();
     public Playlist currentPlaylist;
 
@@ -37,12 +35,13 @@ public class MusicPlayerManager : Singleton<MusicPlayerManager>
 
     private float _currentVolume = 0.5f;
 
+    public int MusicID;
+
     private void Awake()
     {
         Application.runInBackground = true;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         
-        player = GetComponent<bl_AudioPlayer>();
         fullLibraryPath = Application.persistentDataPath +'/'+ musicLibraryPath;
         savePath = Application.persistentDataPath + "/gamedata.json";
 
@@ -60,9 +59,14 @@ public class MusicPlayerManager : Singleton<MusicPlayerManager>
     private void Start()
     {
         UIManager.Instance.GoToLibrary();
-        ActivityManager.Instance.SetVolume(_currentVolume);
-
+        AndroidNativeAudio.makePool(1);
         RemoveDuplicatesInLibrary();
+    }
+
+    public bool isMinimized;
+    private void OnApplicationPause(bool minimized)
+    {
+        isMinimized = minimized;
     }
 
     public void PlaySong(Track track)
@@ -75,14 +79,62 @@ public class MusicPlayerManager : Singleton<MusicPlayerManager>
                 break;
             }
         }
-        ActivityManager.Instance.SetVolume(_currentVolume);
+
+        if (ANAMusic.isPlaying(MusicID))
+        {
+            ANAMusic.pause(MusicID);
+            ANAMusic.release(MusicID);
+        }
+
+        MusicID = ANAMusic.load(track.songPath, true, true, SongLoaded, true);
+        ANAMusic.setVolume(MusicID, _currentVolume);
+
         UIManager.Instance.GoToPlayer(currentPlaylist.tracks[currentTrackIndex]);
+
         SetPrevAndNext();
+    }
+
+    public void SondEnded(int musicID)
+    {
+        NextSong();
+    }
+
+    void SongLoaded(int musicID)
+    {
+        ANAMusic.play(MusicID, SondEnded);
+
+        // // Get music duration
+        // DurationString = "Duration: " + ANAMusic.getDuration(musicID);
+
+        // IsLoaded = true;
+        // PlayPauseButton = "Play";
+        // IsPlayingString = "Is Playing: False";
+        // LoopUnloopButton = "Loop";
+        // IsLoopingString = "Is Looping: False";
+        // IsMute = false;
+        // VolumeMuteButton = "Mute";
+        // VolumeString = "Volume: 1.0";
+        // IsPlayInBackground = false;
+        // PlayInBackgroundString = "Play In Background: False";
     }
 
     public void PlayCurrentSong()
     {
         UIManager.Instance.player.PlayPause();
+    }
+
+    public void PlayPause()
+    {
+        // Check playing state
+        if (ANAMusic.isPlaying(MusicID))
+        {
+            // Pause
+            ANAMusic.pause(MusicID);
+        }
+        else
+        {
+            ANAMusic.play(MusicID, SondEnded);
+        }
     }
 
     private void SetPrevAndNext()
@@ -98,16 +150,10 @@ public class MusicPlayerManager : Singleton<MusicPlayerManager>
         {
             nextSongIndex = 0;
         }
-
-        ActivityManager.Instance.SetNextSong(currentPlaylist.tracks[nextSongIndex].songPath);
-        ActivityManager.Instance.SetPrevSong(currentPlaylist.tracks[prevSongIndex].songPath);
     }
 
     public void NextSong()
     {   
-        ActivityManager.Instance.PlayNextSong();
-        ActivityManager.Instance.SetVolume(_currentVolume);
-
         currentTrackIndex++;
         if(currentTrackIndex >= currentPlaylist.tracks.Count)
         {
@@ -116,19 +162,31 @@ public class MusicPlayerManager : Singleton<MusicPlayerManager>
 
         SetPrevAndNext();
 
-        UIManager.Instance.player.RefreshTrackInfo(currentPlaylist.tracks[currentTrackIndex]);
+        ANAMusic.pause(MusicID);
+        ANAMusic.release(MusicID);
+
+        MusicID = ANAMusic.load(currentPlaylist.tracks[currentTrackIndex].songPath, true, true, SongLoaded, true);
+        ANAMusic.setVolume(MusicID, _currentVolume);
+
+        if(Application.isFocused)
+        {
+            UIManager.Instance.player.RefreshTrackInfo(currentPlaylist.tracks[currentTrackIndex]);
+        }
     }
 
     public void PrevSong()
     {
-        ActivityManager.Instance.PlayPrevSong();
-        ActivityManager.Instance.SetVolume(_currentVolume);
-
         currentTrackIndex--;
         if(currentTrackIndex < 0)
         {
             currentTrackIndex = currentPlaylist.tracks.Count-1;
         }
+
+        ANAMusic.pause(MusicID);
+        ANAMusic.release(MusicID);
+
+        MusicID = ANAMusic.load(currentPlaylist.tracks[currentTrackIndex].songPath, true, true, SongLoaded, true);
+        ANAMusic.setVolume(MusicID, _currentVolume);
 
         SetPrevAndNext();
 
