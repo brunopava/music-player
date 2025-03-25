@@ -1,4 +1,4 @@
-This is a simple oldschool mp3 music player with built in search and download capabilities using spot-dl
+This is a simple oldschool mp3 music player with built in search and download capabilities using spot-dl and unity
 
 In order for the app to work you need to run the API server backend (python FastAPI): https://github.com/brunopava/ven-back/
 
